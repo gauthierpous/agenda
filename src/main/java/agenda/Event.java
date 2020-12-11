@@ -31,6 +31,11 @@ public class Event {
      * Le booleen indiquant si l'évèment est dans un jour choisi
      */
     protected boolean isInDay = false;
+    
+    /**
+     * The ending time of the event
+     */
+    private LocalDateTime myEnd;
 
 
     /**
@@ -54,12 +59,9 @@ public class Event {
      */
     public boolean isInDay(LocalDate aDay) {
         
-        //On détermine la date de fin de l'évènement
-        LocalDateTime myEnd = this.myStart.plus(this.myDuration.toMinutes(), ChronoUnit.MINUTES);
-        
         //On calcule la différence de jour entre le début et la fin de l'évènement
         int jourDebut = this.myStart.getDayOfMonth();
-        int jourFin = myEnd.getDayOfMonth();
+        int jourFin = this.myEnd.getDayOfMonth();
         int difference = jourFin - jourDebut;
         
         //On ajoute le jour de début à la liste
@@ -95,7 +97,13 @@ public class Event {
         return myStart;
     }
 
-
+    /**
+     * @return the myEnd
+     */
+    public LocalDateTime getEnd(){
+        this.myEnd = this.myStart.plus(this.myDuration.toMinutes(), ChronoUnit.MINUTES);
+        return this.myEnd;
+    }
     /**
      * @return the myDuration
      */
