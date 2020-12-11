@@ -50,7 +50,7 @@ public class FixedTerminationEvent extends RepetitiveEvent {
      * </UL>
      * @param numberOfOccurrences the number of occurrences of this repetitive event
      */
-    public FixedTerminationEvent(String title, LocalDateTime start, Duration duration, ChronoUnit frequency, long numberOfOccurrences) {
+        public FixedTerminationEvent(String title, LocalDateTime start, Duration duration, ChronoUnit frequency, long numberOfOccurrences) {
         super(title, start, duration, frequency);
         this.numberOfOccurrences = numberOfOccurrences;
     }

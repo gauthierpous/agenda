@@ -61,7 +61,7 @@ public class Event {
         
         //On calcule la différence de jour entre le début et la fin de l'évènement
         int jourDebut = this.myStart.getDayOfMonth();
-        int jourFin = this.myEnd.getDayOfMonth();
+        int jourFin = this.getEnd().getDayOfMonth();
         int difference = jourFin - jourDebut;
         
         //On ajoute le jour de début à la liste

@@ -17,7 +17,7 @@ public class Agenda {
     private ArrayList<Event> listeEvenements = new ArrayList<>();
     private ArrayList<Event> listeEvenementsPourUnJour = new ArrayList<>();
     private ArrayList<Event> listeEvenementsParTitre = new ArrayList<>();
-    private boolean isFree = true;
+    private boolean isFree = false;
     
     
     public void addEvent(Event e) {
@@ -64,7 +64,8 @@ public class Agenda {
         LocalDateTime debut = e.getStart();
         LocalDateTime fin = e.getEnd();
         
-        this.eventsInDay(jourEvenement ).forEach((evenement) -> {
+        //Pour chaque élément se déroulant le même jour que celui en paramètre
+        this.eventsInDay(jourEvenement).forEach((evenement) -> {
             //heure de début de A après heure de fin de B 
             //ou heure de fin de A avant heure de début de B
             if (debut.isAfter(evenement.getEnd()) || fin.isBefore(evenement.getStart())) {
