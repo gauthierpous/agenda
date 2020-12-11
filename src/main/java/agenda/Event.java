@@ -30,7 +30,7 @@ public class Event {
     /**
      * Le booleen indiquant si l'évèment est dans un jour choisi
      */
-    private boolean isInDay = false;
+    protected boolean isInDay = false;
 
 
     /**
@@ -68,12 +68,12 @@ public class Event {
         //Ajout des autres jours de l'évènement
         for (int i = 1; i <= difference; i++) {
             this.joursEvent.add(this.myStart.plus(i, ChronoUnit.DAYS));
+            System.out.println(this.joursEvent);
         }
         
         //Test de la présence du jour en paramètre dans la liste
         this.joursEvent.forEach(event -> {
             if (event.toLocalDate().equals(aDay)) {
-                System.out.println("C'est bon, l'évènement ce déroule bien aujourd'hui");
                 this.isInDay = true;
             }
         });

@@ -8,6 +8,7 @@ import java.time.temporal.ChronoUnit;
  * Description : A repetitive Event
  */
 public class RepetitiveEvent extends Event {
+
     /**
      * Constructs a repetitive event
      *
@@ -21,10 +22,12 @@ public class RepetitiveEvent extends Event {
      * <LI>ChronoUnit.MONTHS for monthly repetitions</LI>
      * </UL>
      */
+    private final ChronoUnit frequency;
+    private ArrayList<LocalDate> joursExceptionnels = new ArrayList<>();
+
     public RepetitiveEvent(String title, LocalDateTime start, Duration duration, ChronoUnit frequency) {
         super(title, start, duration);
-        // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+        this.frequency = frequency;
     }
 
     /**
@@ -33,8 +36,7 @@ public class RepetitiveEvent extends Event {
      * @param date the event will not occur at this date
      */
     public void addException(LocalDate date) {
-        // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+        this.joursExceptionnels.add(date);
     }
 
     /**
@@ -42,8 +44,29 @@ public class RepetitiveEvent extends Event {
      * @return the type of repetition
      */
     public ChronoUnit getFrequency() {
-        // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");    
+        return this.frequency;
     }
 
+    @Override
+    public boolean isInDay(LocalDate aDay) {
+        LocalDate dateTest;
+        dateTest = this.getStart().toLocalDate();
+
+        //Tant que la date en paramètre est après le début de l'évènement,
+        // Ajouter +1 répétition à l'évènement
+        while (aDay.isAfter(dateTest) || aDay.equals(dateTest)) {
+            if (aDay.isEqual(dateTest)) {
+                this.isInDay = true;
+            }
+            dateTest = dateTest.plus(1, frequency);
+        }
+        
+        //Tester si le jour ne porte pas d'exception
+        this.joursExceptionnels.forEach((j) -> {
+            if (aDay.isEqual(j)) {
+                this.isInDay = false;
+            }
+        });
+        return this.isInDay;
+    }
 }
