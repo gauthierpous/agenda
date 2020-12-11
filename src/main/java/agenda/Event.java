@@ -78,6 +78,7 @@ public class Event {
             }
         });
         return this.isInDay;
+        
     }
    
     /**
@@ -100,6 +101,11 @@ public class Event {
      */
     public Duration getDuration() {
         return myDuration;
+    }
+    
+    @Override
+    public String toString(){
+        return this.myTitle;
     }
 
    
