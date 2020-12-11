@@ -1,6 +1,8 @@
 package agenda;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 /**
@@ -12,20 +14,29 @@ public class Agenda {
      *
      * @param e the event to add
      */
+    private ArrayList<Event> listeEvenements = new ArrayList<>();
+    private ArrayList<Event> listeEvenementsPourUnJour = new ArrayList<>();
+    private ArrayList<Event> listeEvenementsParTitre = new ArrayList<>();
+    private boolean isFree = true;
+    
+    
     public void addEvent(Event e) {
-        // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+        this.listeEvenements.add(e);
     }
 
     /**
      * Computes the events that occur on a given day
      *
-     * @param day the day toi test
+     * @param day the day to test
      * @return and iteraror to the events that occur on that day
      */
     public List<Event> eventsInDay(LocalDate day) {
-        // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");
+        this.listeEvenements.forEach((e) -> {
+            if (e.isInDay(day)) {
+                this.listeEvenementsPourUnJour.add(e);
+            }
+        });
+        return this.listeEvenementsPourUnJour;
     }
     
     /**
@@ -34,8 +45,12 @@ public class Agenda {
      * @return les événements qui ont le même titre
      */
     public List<Event> findByTitle(String title) {
-        // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");        
+        this.listeEvenements.forEach((e) -> {
+            if (e.getTitle().equals(title)) {
+                this.listeEvenementsParTitre.add(e);
+            }
+        });
+        return this.listeEvenementsParTitre;
     }
     
     /**
@@ -44,7 +59,18 @@ public class Agenda {
      * @return vrai s’il y a de la place dans l'agenda pour cet événement
      */
     public boolean isFreeFor(Event e) {
-        // TODO : implémenter cette méthode
-        throw new UnsupportedOperationException("Pas encore implémenté");        
+        LocalDate jourEvenement;
+        jourEvenement = e.getStart().toLocalDate();
+        LocalDateTime debut = e.getStart();
+        LocalDateTime fin = e.getEnd();
+        
+        this.eventsInDay(jourEvenement ).forEach((evenement) -> {
+            //heure de début de A après heure de fin de B 
+            //ou heure de fin de A avant heure de début de B
+            if (debut.isAfter(evenement.getEnd()) || fin.isBefore(evenement.getStart())) {
+                this.isFree = true;            
+            }
+        });
+        return this.isFree;
     }
 }
